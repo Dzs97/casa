@@ -88,6 +88,9 @@ export type MealStatus = "pendiente" | "hecho" | "saltado" | "extra";
 export interface CycleState {
   startDate: string;
   marks: Record<string, MealStatus>; // "0-desayuno" -> "hecho"
+  /** Items marcados en la lista de súper (ya comprados / ya en casa).
+   *  Keys: `${ingredientNameLowercase}|${store}`. Compartido entre dispositivos. */
+  shoppingChecks?: string[];
 }
 
 // ============ Gastos ============

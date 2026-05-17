@@ -309,7 +309,12 @@ export function MenuView() {
       )}
 
       {view === "lista" && (
-        <ShoppingList cycle={cycle} state={state} dishById={dishById} />
+        <ShoppingList
+          cycle={cycle}
+          state={state}
+          dishById={dishById}
+          onChecksChange={(checks) => saveState({ ...state, shoppingChecks: checks })}
+        />
       )}
 
       {view === "platillos" && (
