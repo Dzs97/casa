@@ -83,6 +83,7 @@ export function DishEditor({ dish, onClose, onSave }: Props) {
           {ingredients.map((ing, i) => (
             <div
               key={i}
+              className="ingredient-row"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 60px 60px 1fr 28px",

@@ -148,6 +148,30 @@ export function MenuView() {
     [dishes, showToast]
   );
 
+  const resetFromSeed = useCallback(async () => {
+    if (
+      !confirm(
+        "¿Recargar el menú base desde el repositorio? Esto sobreescribirá los platillos y el ciclo actuales. Los marcados (hecho/extra/saltado) de ciclos anteriores se conservan."
+      )
+    ) {
+      return;
+    }
+    const r = await fetch("/api/menu/reset", { method: "POST" });
+    if (!r.ok) {
+      alert("Error al recargar el menú");
+      return;
+    }
+    // Recargar datos
+    const m = await fetch("/api/menu").then((x) => x.json());
+    setDishes(m.dishes);
+    setCycle(m.cycle);
+    const s = await fetch(`/api/menu/state?startDate=${m.cycle.startDate}`).then(
+      (x) => x.json()
+    );
+    setState(s);
+    showToast("Menú base recargado");
+  }, [showToast]);
+
   const deleteDish = useCallback(
     async (id: string) => {
       if (!cycle) return;
@@ -292,12 +316,17 @@ export function MenuView() {
         <div>
           <div className="section-head" style={{ marginBottom: 14 }}>
             <h2>Platillos guardados</h2>
-            <button
-              className="btn btn-accent"
-              onClick={() => setEditingDish("new")}
-            >
-              + Nuevo platillo
-            </button>
+            <div className="flex gap-2" style={{ flexWrap: "wrap" }}>
+              <button className="btn btn-sm" onClick={resetFromSeed} title="Recarga el menú base que está en el código">
+                ↻ Cargar desde repo
+              </button>
+              <button
+                className="btn btn-accent"
+                onClick={() => setEditingDish("new")}
+              >
+                + Nuevo platillo
+              </button>
+            </div>
           </div>
           {(["desayuno", "comida", "cena"] as MealSlot[]).map((slot) => {
             const list = dishes.filter((d) => d.slot === slot);

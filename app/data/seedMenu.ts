@@ -1,151 +1,118 @@
 import type { Cycle, Dish } from "../lib/types";
 
 /**
- * Seed inicial del menú. Reemplaza estos platillos con los reales que tú y tu pareja
- * comparten en WhatsApp. La app permite editar todo desde la UI una vez deployed.
+ * Menú real de Diego + pareja.
+ * Ciclo arranca lunes 11 may 2026. Semana 2 repite la semana 1 hasta que la editen.
  */
 
 export const SEED_DISHES: Dish[] = [
-  // ============ Desayunos ============
+  // ============ Desayuno ============
   {
-    id: "d-avena",
-    name: "Avena con fruta",
+    id: "d-rotativo",
+    name: "Desayuno (waffles/pan/yogurt/huevos)",
     slot: "desayuno",
+    notes: "Elegir entre waffles, pan tostado, yogurt o huevos. Acompañar con jugo o café.",
     ingredients: [
-      { name: "Avena", quantity: "1", unit: "tza", aisle: "despensa" },
-      { name: "Plátano", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Leche", quantity: "500", unit: "ml", aisle: "lacteos" },
-      { name: "Miel", aisle: "despensa" },
-    ],
-  },
-  {
-    id: "d-huevos",
-    name: "Huevos a la mexicana",
-    slot: "desayuno",
-    ingredients: [
-      { name: "Huevo", quantity: "6", unit: "pza", aisle: "lacteos" },
-      { name: "Jitomate", quantity: "3", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Cebolla", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Chile serrano", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Tortillas", quantity: "8", unit: "pza", aisle: "panaderia" },
-    ],
-  },
-  {
-    id: "d-yogurt",
-    name: "Yogurt con granola y fruta",
-    slot: "desayuno",
-    ingredients: [
-      { name: "Yogurt natural", quantity: "500", unit: "g", aisle: "lacteos" },
-      { name: "Granola", quantity: "200", unit: "g", aisle: "despensa" },
-      { name: "Fresas", quantity: "250", unit: "g", aisle: "frutas-verduras" },
-    ],
-  },
-  {
-    id: "d-chilaquiles",
-    name: "Chilaquiles verdes",
-    slot: "desayuno",
-    ingredients: [
-      { name: "Totopos", quantity: "1", unit: "bolsa", aisle: "despensa" },
-      { name: "Salsa verde", quantity: "1", unit: "frasco", aisle: "despensa" },
-      { name: "Crema", quantity: "1", unit: "bote", aisle: "lacteos" },
-      { name: "Queso fresco", quantity: "200", unit: "g", aisle: "lacteos" },
-      { name: "Huevo", quantity: "4", unit: "pza", aisle: "lacteos" },
-    ],
-  },
-  {
-    id: "d-pantostado",
-    name: "Pan tostado con aguacate",
-    slot: "desayuno",
-    ingredients: [
+      { name: "Waffles", quantity: "1", unit: "caja", aisle: "congelados" },
       { name: "Pan de caja", quantity: "1", unit: "pza", aisle: "panaderia" },
-      { name: "Aguacate", quantity: "4", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Limón", quantity: "3", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Yogurt natural", quantity: "1", unit: "L", aisle: "lacteos" },
+      { name: "Huevo", quantity: "12", unit: "pza", aisle: "lacteos" },
+      { name: "Jugo de naranja", quantity: "1", unit: "L", aisle: "bebidas" },
+      { name: "Café", aisle: "despensa" },
+      { name: "Mermelada o miel", aisle: "despensa" },
+      { name: "Mantequilla", quantity: "1", unit: "barra", aisle: "lacteos" },
     ],
   },
 
   // ============ Comidas ============
   {
-    id: "c-pollo-asado",
-    name: "Pollo asado con verduras",
+    id: "c-pollo-plancha",
+    name: "Pollo a la plancha con ensalada y arroz",
     slot: "comida",
+    notes: "Ensalada: lechuga, manzana y nuez.",
     ingredients: [
       { name: "Pechuga de pollo", quantity: "600", unit: "g", aisle: "carnes" },
-      { name: "Calabaza", quantity: "3", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Zanahoria", quantity: "3", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Lechuga", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Manzana", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Nuez", quantity: "100", unit: "g", aisle: "despensa" },
       { name: "Arroz", quantity: "1", unit: "tza", aisle: "despensa" },
-    ],
-  },
-  {
-    id: "c-tinga",
-    name: "Tinga de pollo",
-    slot: "comida",
-    ingredients: [
-      { name: "Pollo deshebrado", quantity: "500", unit: "g", aisle: "carnes" },
-      { name: "Jitomate", quantity: "4", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Cebolla", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Chipotle adobado", quantity: "1", unit: "lata", aisle: "despensa" },
-      { name: "Tortillas", quantity: "12", unit: "pza", aisle: "panaderia" },
-    ],
-  },
-  {
-    id: "c-pasta",
-    name: "Pasta con salsa de jitomate",
-    slot: "comida",
-    ingredients: [
-      { name: "Pasta", quantity: "500", unit: "g", aisle: "despensa" },
-      { name: "Salsa de jitomate", quantity: "1", unit: "frasco", aisle: "despensa" },
-      { name: "Queso parmesano", quantity: "100", unit: "g", aisle: "lacteos" },
-      { name: "Albahaca", aisle: "frutas-verduras" },
+      { name: "Aderezo", aisle: "despensa" },
     ],
   },
   {
     id: "c-salmon",
-    name: "Salmón al horno con ensalada",
+    name: "Salmón con arroz y espárragos",
     slot: "comida",
     ingredients: [
       { name: "Salmón", quantity: "500", unit: "g", aisle: "carnes" },
-      { name: "Mezcla de hojas verdes", quantity: "1", unit: "bolsa", aisle: "frutas-verduras" },
-      { name: "Aguacate", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Arroz", quantity: "1", unit: "tza", aisle: "despensa" },
+      { name: "Espárragos", quantity: "1", unit: "manojo", aisle: "frutas-verduras" },
       { name: "Limón", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
     ],
   },
   {
-    id: "c-tacos",
-    name: "Tacos de bistec",
+    id: "c-camarones-guarn",
+    name: "Camarones con guarnición",
     slot: "comida",
+    notes: "Acompañar con verduras, papas, pan de queso o arroz.",
     ingredients: [
-      { name: "Bistec de res", quantity: "500", unit: "g", aisle: "carnes" },
-      { name: "Tortillas", quantity: "16", unit: "pza", aisle: "panaderia" },
-      { name: "Cebolla", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Cilantro", quantity: "1", unit: "manojo", aisle: "frutas-verduras" },
-      { name: "Salsa", aisle: "despensa" },
+      { name: "Camarones", quantity: "500", unit: "g", aisle: "carnes" },
+      { name: "Papa", quantity: "4", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Verduras mixtas", quantity: "1", unit: "bolsa", aisle: "congelados" },
+      { name: "Pan de queso (chipá)", quantity: "1", unit: "paquete", aisle: "congelados" },
+      { name: "Ajo", quantity: "1", unit: "cabeza", aisle: "frutas-verduras" },
+      { name: "Mantequilla", aisle: "lacteos" },
     ],
   },
   {
-    id: "c-ensalada",
-    name: "Ensalada con atún",
+    id: "c-atun-pepino",
+    name: "Ensalada de atún con pepino",
     slot: "comida",
     ingredients: [
-      { name: "Lechuga", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
       { name: "Atún en agua", quantity: "2", unit: "lata", aisle: "despensa" },
-      { name: "Pepino", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
-      { name: "Jitomate cherry", quantity: "250", unit: "g", aisle: "frutas-verduras" },
+      { name: "Pepino", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Lechuga", quantity: "1", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Limón", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Mayonesa", aisle: "despensa" },
     ],
   },
   {
-    id: "c-arroz-frito",
-    name: "Arroz frito con verduras",
+    id: "c-pasta-camarones",
+    name: "Pasta con camarones",
     slot: "comida",
     ingredients: [
-      { name: "Arroz", quantity: "2", unit: "tza", aisle: "despensa" },
-      { name: "Huevo", quantity: "4", unit: "pza", aisle: "lacteos" },
-      { name: "Chícharos", quantity: "1", unit: "bolsa", aisle: "congelados" },
-      { name: "Salsa de soya", aisle: "despensa" },
-      { name: "Zanahoria", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Pasta", quantity: "500", unit: "g", aisle: "despensa" },
+      { name: "Camarones", quantity: "400", unit: "g", aisle: "carnes" },
+      { name: "Ajo", quantity: "1", unit: "cabeza", aisle: "frutas-verduras" },
+      { name: "Crema para cocinar", quantity: "1", unit: "envase", aisle: "lacteos" },
+      { name: "Perejil", aisle: "frutas-verduras" },
+    ],
+  },
+  {
+    id: "c-carne-guarn",
+    name: "Carne con guarnición",
+    slot: "comida",
+    ingredients: [
+      { name: "Carne para asar", quantity: "600", unit: "g", aisle: "carnes" },
+      { name: "Guarnición a elegir", aisle: "frutas-verduras" },
     ],
   },
 
   // ============ Cenas ============
+  {
+    id: "n-sandwich-frias",
+    name: "Sándwich de carnes frías",
+    slot: "cena",
+    ingredients: [
+      { name: "Pan de caja", quantity: "1", unit: "pza", aisle: "panaderia" },
+      { name: "Jamón", quantity: "300", unit: "g", aisle: "carnes" },
+      { name: "Pavo", quantity: "300", unit: "g", aisle: "carnes" },
+      { name: "Queso manchego rebanado", quantity: "300", unit: "g", aisle: "lacteos" },
+      { name: "Jitomate", quantity: "3", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Lechuga", aisle: "frutas-verduras" },
+      { name: "Mayonesa / mostaza", aisle: "despensa" },
+    ],
+  },
   {
     id: "n-quesadillas",
     name: "Quesadillas",
@@ -156,76 +123,46 @@ export const SEED_DISHES: Dish[] = [
     ],
   },
   {
-    id: "n-sandwich",
-    name: "Sándwich de pavo",
+    id: "n-grilled-cheese",
+    name: "Grilled cheese",
     slot: "cena",
     ingredients: [
-      { name: "Pan integral", quantity: "1", unit: "pza", aisle: "panaderia" },
-      { name: "Pavo en rebanadas", quantity: "200", unit: "g", aisle: "carnes" },
-      { name: "Queso manchego", quantity: "200", unit: "g", aisle: "lacteos" },
-      { name: "Jitomate", quantity: "2", unit: "pza", aisle: "frutas-verduras" },
+      { name: "Pan de caja", quantity: "1", unit: "pza", aisle: "panaderia" },
+      { name: "Queso amarillo / manchego", quantity: "200", unit: "g", aisle: "lacteos" },
+      { name: "Mantequilla", aisle: "lacteos" },
     ],
   },
   {
-    id: "n-sopa",
-    name: "Sopa de verduras",
+    id: "n-libre",
+    name: "Cena libre (sobras / algo light)",
     slot: "cena",
-    ingredients: [
-      { name: "Caldo de pollo", quantity: "1", unit: "lt", aisle: "despensa" },
-      { name: "Verduras mixtas", quantity: "1", unit: "bolsa", aisle: "congelados" },
-      { name: "Pasta para sopa", quantity: "200", unit: "g", aisle: "despensa" },
-    ],
-  },
-  {
-    id: "n-omelette",
-    name: "Omelette con espinacas",
-    slot: "cena",
-    ingredients: [
-      { name: "Huevo", quantity: "6", unit: "pza", aisle: "lacteos" },
-      { name: "Espinacas", quantity: "1", unit: "bolsa", aisle: "frutas-verduras" },
-      { name: "Queso", quantity: "150", unit: "g", aisle: "lacteos" },
-    ],
-  },
-  {
-    id: "n-hotdogs",
-    name: "Hot dogs",
-    slot: "cena",
-    ingredients: [
-      { name: "Salchichas", quantity: "1", unit: "paquete", aisle: "carnes" },
-      { name: "Pan para hot dog", quantity: "8", unit: "pza", aisle: "panaderia" },
-      { name: "Mostaza y catsup", aisle: "despensa" },
-    ],
-  },
-  {
-    id: "n-fruta",
-    name: "Cena ligera (fruta + yogurt)",
-    slot: "cena",
-    ingredients: [
-      { name: "Fruta de temporada", aisle: "frutas-verduras" },
-      { name: "Yogurt natural", quantity: "500", unit: "g", aisle: "lacteos" },
-    ],
+    notes: "Variable: sobras de la comida, fruta, yogurt, lo que haya.",
+    ingredients: [],
   },
 ];
 
-/** Plan de 14 días por defecto. Lunes a domingo, x2. */
+/**
+ * Lunes 11 may 2026 → domingo 24 may 2026 (2 semanas).
+ * Semana 2 repite semana 1; editar desde la UI cuando definan el nuevo menú.
+ */
 export const SEED_CYCLE: Cycle = {
-  startDate: "2026-05-18", // lunes; ajustable desde UI
+  startDate: "2026-05-11",
   days: [
     // Semana 1
-    { desayuno: "d-avena", comida: "c-pollo-asado", cena: "n-quesadillas" },
-    { desayuno: "d-huevos", comida: "c-pasta", cena: "n-sandwich" },
-    { desayuno: "d-yogurt", comida: "c-tinga", cena: "n-sopa" },
-    { desayuno: "d-pantostado", comida: "c-ensalada", cena: "n-omelette" },
-    { desayuno: "d-avena", comida: "c-tacos", cena: "n-fruta" },
-    { desayuno: "d-chilaquiles", comida: "c-arroz-frito", cena: "n-hotdogs" },
-    { desayuno: "d-huevos", comida: "c-salmon", cena: "n-quesadillas" },
-    // Semana 2
-    { desayuno: "d-yogurt", comida: "c-pasta", cena: "n-sandwich" },
-    { desayuno: "d-pantostado", comida: "c-pollo-asado", cena: "n-sopa" },
-    { desayuno: "d-avena", comida: "c-tinga", cena: "n-omelette" },
-    { desayuno: "d-huevos", comida: "c-arroz-frito", cena: "n-fruta" },
-    { desayuno: "d-yogurt", comida: "c-tacos", cena: "n-quesadillas" },
-    { desayuno: "d-chilaquiles", comida: "c-ensalada", cena: "n-hotdogs" },
-    { desayuno: "d-pantostado", comida: "c-salmon", cena: "n-sandwich" },
+    { desayuno: "d-rotativo", comida: "c-pollo-plancha", cena: "n-sandwich-frias" }, // L
+    { desayuno: "d-rotativo", comida: "c-salmon", cena: "n-quesadillas" }, // M
+    { desayuno: "d-rotativo", comida: "c-camarones-guarn", cena: "n-sandwich-frias" }, // X
+    { desayuno: "d-rotativo", comida: "c-atun-pepino", cena: "n-grilled-cheese" }, // J
+    { desayuno: "d-rotativo", comida: "c-pollo-plancha", cena: "n-sandwich-frias" }, // V
+    { desayuno: "d-rotativo", comida: "c-pasta-camarones", cena: "n-libre" }, // S
+    { desayuno: "d-rotativo", comida: "c-carne-guarn", cena: "n-libre" }, // D
+    // Semana 2 (repite — editar desde UI)
+    { desayuno: "d-rotativo", comida: "c-pollo-plancha", cena: "n-sandwich-frias" },
+    { desayuno: "d-rotativo", comida: "c-salmon", cena: "n-quesadillas" },
+    { desayuno: "d-rotativo", comida: "c-camarones-guarn", cena: "n-sandwich-frias" },
+    { desayuno: "d-rotativo", comida: "c-atun-pepino", cena: "n-grilled-cheese" },
+    { desayuno: "d-rotativo", comida: "c-pollo-plancha", cena: "n-sandwich-frias" },
+    { desayuno: "d-rotativo", comida: "c-pasta-camarones", cena: "n-libre" },
+    { desayuno: "d-rotativo", comida: "c-carne-guarn", cena: "n-libre" },
   ],
 };
