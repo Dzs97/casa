@@ -67,9 +67,13 @@ function aggregate(
         }
         const entry = acc.get(key)!;
         if (ing.quantity) {
-          entry.quantities.push(
-            `${ing.quantity}${ing.unit ? ` ${ing.unit}` : ""}`
-          );
+          // Las cantidades representan TOTAL para el ciclo, no por uso.
+          // Deduplicar: si dos platillos comparten ingrediente y la cantidad
+          // es idéntica, mostrarla una sola vez. Si difieren, mostrar ambas.
+          const qStr = `${ing.quantity}${ing.unit ? ` ${ing.unit}` : ""}`;
+          if (!entry.quantities.includes(qStr)) {
+            entry.quantities.push(qStr);
+          }
         }
         entry.fromDishes.add(dish.name);
         entry.totalUses += 1;
