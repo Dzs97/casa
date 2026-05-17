@@ -40,11 +40,28 @@ export const MEAL_LABELS: Record<MealSlot, string> = {
   cena: "Cena",
 };
 
+export type Store = "wild-fork" | "sumesa-walmart" | "otros";
+
+export const STORE_LABELS: Record<Store, string> = {
+  "wild-fork": "Wild Fork",
+  "sumesa-walmart": "SuMesa / Walmart",
+  otros: "Otros",
+};
+
+export const STORE_ORDER: Store[] = ["wild-fork", "sumesa-walmart", "otros"];
+
+/** Inferir tienda probable según el pasillo. Wild Fork = carnes/congelados. */
+export function defaultStoreForAisle(aisle: Aisle): Store {
+  if (aisle === "carnes" || aisle === "congelados") return "wild-fork";
+  return "sumesa-walmart";
+}
+
 export interface Ingredient {
   name: string;
   quantity?: string; // "200", "1/2", "al gusto"
   unit?: string; // "g", "kg", "pza", "tza"
   aisle: Aisle;
+  store?: Store; // si no se define, se infiere del pasillo
 }
 
 export interface Dish {

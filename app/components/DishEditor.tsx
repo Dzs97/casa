@@ -1,8 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import type { Aisle, Dish, Ingredient, MealSlot } from "../lib/types";
-import { AISLE_LABELS, AISLE_ORDER, MEAL_LABELS, MEAL_SLOTS } from "../lib/types";
+import type { Aisle, Dish, Ingredient, MealSlot, Store } from "../lib/types";
+import {
+  AISLE_LABELS,
+  AISLE_ORDER,
+  MEAL_LABELS,
+  MEAL_SLOTS,
+  STORE_LABELS,
+  STORE_ORDER,
+  defaultStoreForAisle,
+} from "../lib/types";
 
 interface Props {
   dish: Dish | null; // null = nuevo
@@ -33,7 +41,10 @@ export function DishEditor({ dish, onClose, onSave }: Props) {
   };
 
   const addIng = () => {
-    setIngredients((prev) => [...prev, { name: "", aisle: "despensa" }]);
+    setIngredients((prev) => [
+      ...prev,
+      { name: "", aisle: "despensa", store: "sumesa-walmart" },
+    ]);
   };
 
   const handleSave = () => {
@@ -42,7 +53,11 @@ export function DishEditor({ dish, onClose, onSave }: Props) {
       return;
     }
     const cleaned = ingredients
-      .map((i) => ({ ...i, name: i.name.trim() }))
+      .map((i) => ({
+        ...i,
+        name: i.name.trim(),
+        store: i.store ?? defaultStoreForAisle(i.aisle),
+      }))
       .filter((i) => i.name);
     onSave({
       id: dish?.id ?? newId(),
@@ -108,7 +123,15 @@ export function DishEditor({ dish, onClose, onSave }: Props) {
               />
               <select
                 value={ing.aisle}
-                onChange={(e) => updateIng(i, { aisle: e.target.value as Aisle })}
+                onChange={(e) => {
+                  const newAisle = e.target.value as Aisle;
+                  // Si el usuario no ha tocado store manualmente, sugerir el default del nuevo pasillo
+                  const newStore =
+                    !ing.store || ing.store === defaultStoreForAisle(ing.aisle)
+                      ? defaultStoreForAisle(newAisle)
+                      : ing.store;
+                  updateIng(i, { aisle: newAisle, store: newStore });
+                }}
               >
                 {AISLE_ORDER.map((a) => (
                   <option key={a} value={a}>
@@ -124,6 +147,17 @@ export function DishEditor({ dish, onClose, onSave }: Props) {
               >
                 ✕
               </button>
+              <select
+                value={ing.store ?? defaultStoreForAisle(ing.aisle)}
+                onChange={(e) => updateIng(i, { store: e.target.value as Store })}
+                style={{ gridColumn: "1 / -1" }}
+              >
+                {STORE_ORDER.map((s) => (
+                  <option key={s} value={s}>
+                    Súper: {STORE_LABELS[s]}
+                  </option>
+                ))}
+              </select>
             </div>
           ))}
           <button className="btn btn-sm" onClick={addIng}>
