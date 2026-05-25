@@ -104,6 +104,15 @@ export function daysUntil(iso: string): number {
   return daysBetween(todayISO(), iso);
 }
 
+/** Lunes más reciente (o el de hoy si hoy es lunes). */
+export function mostRecentMonday(iso: string = todayISO()): string {
+  const d = fromISO(iso);
+  const dow = d.getDay(); // 0=dom, 1=lun, ... 6=sab
+  const offset = dow === 0 ? 6 : dow - 1;
+  d.setDate(d.getDate() - offset);
+  return toISO(d);
+}
+
 export function dueDateForMonth(monthKey: string, dueDay: number): string {
   const [y, m] = monthKey.split("-").map(Number);
   // Si el día excede el mes (ej. 31 en feb), usar último día

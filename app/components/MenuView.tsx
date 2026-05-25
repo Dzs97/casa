@@ -14,6 +14,7 @@ import {
   daysBetween,
   formatLongDate,
   formatShortDate,
+  mostRecentMonday,
   todayISO,
 } from "../lib/dates";
 import { DishModal } from "./DishModal";
@@ -58,11 +59,26 @@ export function MenuView() {
     (async () => {
       const r = await fetch("/api/menu");
       const data = await r.json();
+      const today = todayISO();
+
+      // Auto-roll: si el ciclo ya terminó (hoy > startDate+13), anclar al
+      // lunes más reciente. No requiere acción del usuario.
+      let cycleToUse = data.cycle;
+      if (daysBetween(data.cycle.startDate, today) >= 14) {
+        const newStart = mostRecentMonday(today);
+        cycleToUse = { ...data.cycle, startDate: newStart };
+        await fetch("/api/menu", {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ cycle: cycleToUse }),
+        });
+      }
+
       setDishes(data.dishes);
-      setCycle(data.cycle);
+      setCycle(cycleToUse);
 
       const s = await fetch(
-        `/api/menu/state?startDate=${data.cycle.startDate}`
+        `/api/menu/state?startDate=${cycleToUse.startDate}`
       );
       const stateData = await s.json();
       setState(stateData);
@@ -484,21 +500,18 @@ function TodayView({
   onRestartCycle,
 }: TodayViewProps) {
   if (!todayInCycle) {
-    const beforeStart = todayIdx < 0;
+    // Edge case: el ciclo está en el futuro (startDate > hoy). El auto-roll
+    // solo aplica cuando el ciclo ya terminó.
     return (
       <div className="empty-state-card">
         <h2 style={{ fontFamily: "var(--font-serif)" }}>
-          {beforeStart
-            ? `El ciclo empieza ${formatLongDate(cycle.startDate)}`
-            : "El ciclo actual ya terminó"}
+          El ciclo empieza {formatLongDate(cycle.startDate)}
         </h2>
         <p className="muted">
-          {beforeStart
-            ? "Cuando llegue el día, aquí aparecerán las comidas planeadas."
-            : "Reinicia el ciclo o muévelo desde Ajustes para empezar uno nuevo."}
+          Cuando llegue el día, aquí aparecerán las comidas planeadas.
         </p>
         <button className="btn btn-accent" onClick={onRestartCycle}>
-          Empezar nuevo ciclo hoy
+          Empezar el ciclo hoy
         </button>
       </div>
     );
