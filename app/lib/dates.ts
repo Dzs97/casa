@@ -52,6 +52,34 @@ export function formatMonth(key: string): string {
   return `${months[m - 1]} ${y}`;
 }
 
+export function formatLongDate(iso: string): string {
+  const d = fromISO(iso);
+  const days = [
+    "domingo",
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+  ];
+  const months = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+  return `${days[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]}`;
+}
+
 export function formatShortDate(iso: string): string {
   const d = fromISO(iso);
   const days = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
