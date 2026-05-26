@@ -1017,18 +1017,8 @@ h3 {
 }
 
 .meal-card-body {
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: none;
   padding: 8px 16px 14px;
-  cursor: pointer;
   color: inherit;
-  display: block;
-}
-
-.meal-card-body:hover .meal-card-cta {
-  color: var(--ink) !important;
 }
 
 .meal-card-title {
@@ -1063,6 +1053,50 @@ h3 {
   font-size: 12px;
   font-family: var(--font-mono);
   letter-spacing: 0.02em;
+}
+
+/* Chips visibles para acciones del platillo (cambiar, ingredientes) */
+.meal-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+  font-family: inherit;
+}
+
+.chip:hover {
+  background: var(--bg-card);
+  border-color: var(--ink-faded);
+}
+
+.chip:active {
+  transform: translateY(1px);
+}
+
+.chip-primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.chip-primary:hover {
+  filter: brightness(0.95);
+  border-color: var(--accent);
 }
 
 .meal-card-actions {

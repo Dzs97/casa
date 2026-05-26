@@ -18,6 +18,7 @@ interface Props {
   state: CycleState;
   dishes: Dish[];
   dishById: Map<string, Dish>;
+  initialMode?: "details" | "swap";
   onClose: () => void;
   onSetStatus: (s: MealStatus) => void;
   onSwap: (dishId: string | null) => void;
@@ -41,6 +42,7 @@ export function DishModal({
   state,
   dishes,
   dishById,
+  initialMode,
   onClose,
   onSetStatus,
   onSwap,
@@ -50,7 +52,7 @@ export function DishModal({
   const status = (state.marks[`${dayIdx}-${slot}`] as MealStatus) ?? "pendiente";
   const date = addDays(cycle.startDate, dayIdx);
 
-  const [swapping, setSwapping] = useState(false);
+  const [swapping, setSwapping] = useState(initialMode === "swap");
   const slotDishes = dishes.filter((d) => d.slot === slot);
 
   // Sugerencias para "extra": platillos no usados aún en otros días "hecho"

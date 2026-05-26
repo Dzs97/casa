@@ -33,7 +33,7 @@ const SLOT_EMOJI: Record<MealSlot, string> = {
 const STATUS_PILL: Record<MealStatus, { label: string; color: string }> = {
   pendiente: { label: "Pendiente", color: "var(--ink-faded)" },
   hecho: { label: "Hecho ✓", color: "var(--accent-2)" },
-  extra: { label: "Sustituido", color: "var(--warn)" },
+  extra: { label: "Comimos otra cosa", color: "var(--warn)" },
   saltado: { label: "Saltado", color: "var(--ink-faded)" },
 };
 
@@ -43,9 +43,11 @@ export function MenuView() {
   const [state, setState] = useState<CycleState | null>(null);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<View>("hoy");
-  const [editing, setEditing] = useState<{ dayIdx: number; slot: MealSlot } | null>(
-    null
-  );
+  const [editing, setEditing] = useState<{
+    dayIdx: number;
+    slot: MealSlot;
+    mode?: "details" | "swap";
+  } | null>(null);
   const [editingDish, setEditingDish] = useState<Dish | "new" | null>(null);
   const [toast, setToast] = useState<string>("");
   const [showAdmin, setShowAdmin] = useState(false);
@@ -309,7 +311,12 @@ export function MenuView() {
           todayIdx={todayIdx}
           todayInCycle={todayInCycle}
           today={today}
-          onOpenDetails={(dayIdx, slot) => setEditing({ dayIdx, slot })}
+          onOpenDetails={(dayIdx, slot) =>
+            setEditing({ dayIdx, slot, mode: "details" })
+          }
+          onSwap={(dayIdx, slot) =>
+            setEditing({ dayIdx, slot, mode: "swap" })
+          }
           onToggleStatus={toggleMark}
           onRestartCycle={restartCycle}
         />
@@ -452,6 +459,7 @@ export function MenuView() {
           state={state}
           dishes={dishes}
           dishById={dishById}
+          initialMode={editing.mode}
           onClose={() => setEditing(null)}
           onSetStatus={(s) => setMark(editing.dayIdx, editing.slot, s)}
           onSwap={(id) => swapDish(editing.dayIdx, editing.slot, id)}
@@ -484,6 +492,7 @@ interface TodayViewProps {
   todayInCycle: boolean;
   today: string;
   onOpenDetails: (dayIdx: number, slot: MealSlot) => void;
+  onSwap: (dayIdx: number, slot: MealSlot) => void;
   onToggleStatus: (dayIdx: number, slot: MealSlot, status: MealStatus) => void;
   onRestartCycle: () => void;
 }
@@ -496,6 +505,7 @@ function TodayView({
   todayInCycle,
   today,
   onOpenDetails,
+  onSwap,
   onToggleStatus,
   onRestartCycle,
 }: TodayViewProps) {
@@ -540,6 +550,7 @@ function TodayView({
             dish={dish}
             status={status}
             onDetails={() => onOpenDetails(todayIdx, slot)}
+            onSwap={() => onSwap(todayIdx, slot)}
             onToggle={(s) => onToggleStatus(todayIdx, slot, s)}
           />
         );
@@ -577,11 +588,20 @@ interface MealCardBigProps {
   dish: Dish | undefined | null;
   status: MealStatus;
   onDetails: () => void;
+  onSwap: () => void;
   onToggle: (status: MealStatus) => void;
 }
 
-function MealCardBig({ slot, dish, status, onDetails, onToggle }: MealCardBigProps) {
+function MealCardBig({
+  slot,
+  dish,
+  status,
+  onDetails,
+  onSwap,
+  onToggle,
+}: MealCardBigProps) {
   const pill = STATUS_PILL[status];
+  const hasIngredients = !!dish && dish.ingredients.length > 0;
   return (
     <article className="meal-card-big" data-status={status}>
       <header className="meal-card-head">
@@ -597,34 +617,43 @@ function MealCardBig({ slot, dish, status, onDetails, onToggle }: MealCardBigPro
         </span>
       </header>
 
-      <button className="meal-card-body" onClick={onDetails}>
+      <div className="meal-card-body">
         <h3 className="meal-card-title">
           {dish ? dish.name : <em className="muted">— sin asignar —</em>}
         </h3>
         {dish?.notes && <p className="meal-card-notes">{dish.notes}</p>}
-        {dish && (
-          <span className="meal-card-cta muted">
-            Ver ingredientes / cambiar →
-          </span>
-        )}
-      </button>
+
+        <div className="meal-card-chips">
+          <button className="chip chip-primary" onClick={onSwap}>
+            ↻ Cambiar platillo
+          </button>
+          {hasIngredients && (
+            <button className="chip" onClick={onDetails}>
+              📋 Ver ingredientes
+            </button>
+          )}
+        </div>
+      </div>
 
       <div className="meal-card-actions">
         <button
           className={`action-btn ${status === "hecho" ? "active hecho" : ""}`}
           onClick={() => onToggle("hecho")}
+          title="Lo cocinamos como estaba planeado"
         >
           ✓ Hecho
         </button>
         <button
           className={`action-btn ${status === "extra" ? "active extra" : ""}`}
           onClick={() => onToggle("extra")}
+          title="Comimos otra cosa (salida, sobras, antojo...)"
         >
-          ⤵ Sustituí
+          ⤴ Comimos otra cosa
         </button>
         <button
           className={`action-btn ${status === "saltado" ? "active saltado" : ""}`}
           onClick={() => onToggle("saltado")}
+          title="No aplica (saltarlo)"
         >
           ⏭ Saltar
         </button>
