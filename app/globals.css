@@ -1055,6 +1055,73 @@ h3 {
   letter-spacing: 0.02em;
 }
 
+/* ============ Swap section (cambiar platillo) ============ */
+
+.swap-section {
+  background: var(--bg-card);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.swap-header {
+  margin-bottom: 12px;
+}
+
+.swap-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.swap-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.swap-select {
+  width: 100%;
+  padding: 14px 14px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.swap-select:focus {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.swap-tip {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+}
+
+.swap-tip strong {
+  color: var(--ink);
+}
+
 /* Chips visibles para acciones del platillo (cambiar, ingredientes) */
 .meal-card-chips {
   display: flex;

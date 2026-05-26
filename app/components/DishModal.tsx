@@ -110,24 +110,27 @@ export function DishModal({
         </div>
 
         {swapping && (
-          <div className="card" style={{ marginBottom: 16 }}>
-            <div className="field">
-              <label>Reemplazar por</label>
-              <select
-                value={dishId ?? ""}
-                onChange={(e) => onSwap(e.target.value || null)}
-              >
-                <option value="">— sin asignar —</option>
-                {slotDishes.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.name}
-                  </option>
-                ))}
-              </select>
+          <div className="swap-section">
+            <div className="swap-header">
+              <span className="swap-eyebrow">↻ CAMBIAR PLATILLO</span>
+              <h4 className="swap-title">Elige otro {MEAL_LABELS[slot].toLowerCase()}</h4>
             </div>
+            <select
+              className="swap-select"
+              value={dishId ?? ""}
+              onChange={(e) => onSwap(e.target.value || null)}
+              autoFocus
+            >
+              <option value="">— sin asignar —</option>
+              {slotDishes.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
             {pendingSameSlotIdxs.length > 0 && (
-              <div style={{ fontSize: 12, color: "var(--ink-muted)" }}>
-                💡 Tip: platillos pendientes en otros días que podrías mover aquí:{" "}
+              <div className="swap-tip">
+                💡 <strong>Pendientes que podrías mover aquí:</strong>{" "}
                 {pendingSameSlotIdxs
                   .slice(0, 5)
                   .map((i) => {
